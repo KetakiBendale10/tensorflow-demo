@@ -1,0 +1,29 @@
+<html>
+<body>
+    <img src="https://target.scene7.com/is/image/Target/GUEST_c03fdc36-4c92-45b1-9fa7-c1b11ab62993?wid=488&hei=488&fmt=webp"
+        id="cute" crossorigin="anonymous" />
+    <pre id="demo"></pre>
+    <!-- Load TensorFlow.js -->
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <!-- Load Posenet -->
+    <script src="https://unpkg.com/@tensorflow-models/posenet">
+    </script>
+    <script type="text/javascript">
+        posenet.load().then(function (net) {
+            const imageScaleFactor = 0.50;
+            const flipHorizontal = false;
+            const outputStride = 16;
+            const imageElement = document.getElementById('cute');
+            // load the posenet model
+            //const net = await posenet.load();
+            net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride).then(function (data) {
+                console.log("Cute Pose..", data);
+                document.getElementById("demo").innerHTML = JSON.stringify(data, undefined, 2);
+            })
+            .catch(function (err) {
+                console.log("Error - ", err);
+            });
+        });
+    </script>
+</body>
+</html>
